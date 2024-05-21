@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: web_shop
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/web_shop
+    username: postgres
+    password: qwerty
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+    open-in-view: false
+  main:
+    allow-circular-references: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  thymeleaf:
+    cache: false
+
+server:
+  error:
+    whitelabel:
+      enabled: false

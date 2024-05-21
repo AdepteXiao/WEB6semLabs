@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div th:replace="~{products/header :: header}"></div>
+<main>
+    <p class="page_name h1">Products</p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, stat : ${products}">
+            <td th:text="${product.name}"></td>
+            <td class="clickable"><a th:href="@{/products(brand_id=${product.brand.id})}"
+                                     th:text="${product.brand.name}"></a></td>
+            <td class="clickable"><a th:href="@{/products(category_id=${product.category.id})}"
+                                     th:text="${product.category.name}"></a></td>
+            <td class="description" th:text="${#strings.length(product.getDescription()) > 70 ? #strings.substring(product.getDescription(), 0, 70) + '...' : product.getDescription()}"></td>
+            <td th:text="${product.price}"></td>
+            <td class="add-button">
+                <form th:action="@{/products/add}" th:method="post">
+                    <input type="hidden" th:value="${product.getId()}" name="productId"/>
+                    <button type="submit" name="action" class="btn btn-outline-dark btn-margin">+</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
